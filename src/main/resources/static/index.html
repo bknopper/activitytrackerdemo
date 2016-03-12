@@ -21,6 +21,12 @@
                 self.user = "N/A";
                 self.authenticated = false;
             });
+
+            $http.get("/chr").success(function(data) {
+                console.log(data);
+            }).error(function() {
+                console.log("Noo!!");
+            });
         });
     </script>
 </head>
