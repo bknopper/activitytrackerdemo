@@ -87,8 +87,16 @@ public class SimpleApplication extends WebSecurityConfigurerAdapter {
 				"https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/00:00/23:59.json",
 				String.class);
 
-		System.out.println(response);
 		return response.toString();
+	}
+
+	@RequestMapping("/lifetime")
+	public String lifetime() {
+		ResponseEntity<String> response = oauth2RestTemplate.getForEntity(
+				"https://api.fitbit.com/1/user/-/activities.json",
+				String.class);
+
+		return response.getBody().toString();
 	}
 
 	public static void main(String[] args) {
