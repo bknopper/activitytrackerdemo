@@ -26,6 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 
 
 @SpringBootApplication
@@ -92,7 +95,12 @@ public class SimpleApplication extends WebSecurityConfigurerAdapter {
 
 	@RequestMapping("/summarytoday")
 	public String todaysSummary() {
-		final String resourceUrl = "https://api.fitbit.com/1/user/-/activities.json";
+
+		// Get today as String in the correct format
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		final String today = sdf.format(Date.from(Instant.now()));
+
+		final String resourceUrl = String.format("https://api.fitbit.com/1/user/-/activities/date/%s.json", today);
 		return getFitBitData(resourceUrl);
 	}
 
