@@ -249,7 +249,6 @@
 //        });
 
         $http.get("/lifetime").success(function(data) {
-            console.log(data);
             self.lifetime = data.lifetime;
             self.personalBests = data.best;
         }).error(function() {
