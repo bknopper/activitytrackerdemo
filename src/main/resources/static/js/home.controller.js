@@ -36,9 +36,51 @@ angular.module("app", []).controller("home", function ($http) {
     });
 
     $http.get("/lastweek/steps").success(function(data) {
-        console.log(data);
+        var steps = data["activities-tracker-steps"];
+        var plotData = [];
+
+        for(var i = 0; i < steps.length; i++) {
+            plotData.push([i+1, parseInt(steps[i].value)]);
+        }
+
+        plot(plotData, 0, 10000, "last-week-steps", "Last Week Steps");
     }).error(function() {
         console.log("Noo!!");
     });
+
+
+    // Helper functions
+
+    function plot(data, yMin, yMax, plotId, label) {
+
+        var options = {
+            series: {
+                lines: {
+                    show: true
+                },
+                points: {
+                    show: true
+                }
+            },
+            grid: {
+                hoverable: true //IMPORTANT! this is needed for tooltip to work
+            },
+            yaxis: {
+                min: yMin,
+                max: yMax
+            },
+            xaxis: {
+                min: 1,
+                max: 7
+            },
+            tooltip: false
+        };
+
+        var plotObj = $.plot($("#flot-line-chart-" + plotId), [{
+                data: data,
+                label: label
+            }],
+            options);
+    }
 
 });
