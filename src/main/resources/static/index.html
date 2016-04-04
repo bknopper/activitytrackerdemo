@@ -78,6 +78,59 @@
             </div>
             <!-- /.row -->
 
+            <!-- Todays summary Panel -->
+            <div class="page-header">
+                <h1><i class="fa fa-calendar-o"></i> Today's summary</h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-map-marker fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{home.summaryToday.distances[0].distance | number : 1}}</div>
+                                    <div>Distance (kilometers)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-road fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{home.summaryToday.steps | number : 1}}</div>
+                                    <div>Steps</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-arrow-up fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{home.summaryToday.floors | number : 0}}</div>
+                                    <div>Floors</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- /Todays Summary Panel -->
 
             <!-- Personal Bests Panel -->
             <div class="page-header">
@@ -242,15 +295,15 @@
             });
         };
 
-//        $http.get("/chr").success(function(data) {
-//            console.log(data);
-//        }).error(function() {
-//            console.log("Noo!!");
-//        });
-
         $http.get("/lifetime").success(function(data) {
             self.lifetime = data.lifetime;
             self.personalBests = data.best;
+        }).error(function() {
+            console.log("Noo!!");
+        });
+
+        $http.get("/summarytoday").success(function(data) {
+            self.summaryToday = data.summary;
         }).error(function() {
             console.log("Noo!!");
         });
