@@ -104,6 +104,17 @@ public class SimpleApplication extends WebSecurityConfigurerAdapter {
 		return getFitBitData(resourceUrl);
 	}
 
+	@RequestMapping("/lastweek/steps")
+	public String lastweekSteps() {
+
+		// Get today as String in the correct format
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		final String today = sdf.format(Date.from(Instant.now()));
+
+		final String resourceUrl = String.format("https://api.fitbit.com/1/user/-/activities/tracker/steps/date/%s/7d.json", today);
+		return getFitBitData(resourceUrl);
+	}
+
 	private String getFitBitData(String resourceUrl) {
 		ResponseEntity<String> response = oauth2RestTemplate.getForEntity(
 				resourceUrl,
