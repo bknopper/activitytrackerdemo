@@ -92,9 +92,9 @@
                                     <i class="fa fa-map-marker fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">{{home.lifetime.best.total.distance.value | number : 1}}</div>
+                                    <div class="huge">{{home.personalBests.total.distance.value | number : 1}}</div>
                                     <div>Distance (kilometers)</div>
-                                    <div>Achieved on {{home.lifetime.best.total.distance.date}}</div>
+                                    <div>Achieved on {{home.personalBests.total.distance.date}}</div>
                                 </div>
                             </div>
                         </div>
@@ -108,9 +108,9 @@
                                     <i class="fa fa-road fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">{{home.lifetime.best.total.steps.value | number : 1}}</div>
+                                    <div class="huge">{{home.personalBests.total.steps.value | number : 1}}</div>
                                     <div>Steps</div>
-                                    <div>Achieved on {{home.lifetime.best.total.steps.date}}</div>
+                                    <div>Achieved on {{home.personalBests.total.steps.date}}</div>
                                 </div>
                             </div>
                         </div>
@@ -124,9 +124,9 @@
                                     <i class="fa fa-arrow-up fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">{{home.lifetime.best.total.floors.value | number : 1}}</div>
+                                    <div class="huge">{{home.personalBests.total.floors.value | number : 0}}</div>
                                     <div>Floors</div>
-                                    <div>Achieved on {{home.lifetime.best.total.floors.date}}</div>
+                                    <div>Achieved on {{home.personalBests.total.floors.date}}</div>
                                 </div>
                             </div>
                         </div>
@@ -135,6 +135,60 @@
             </div>
             <!-- /.row -->
             <!-- /Personal Bests Panel -->
+
+            <!-- Personal Totals Panel -->
+            <div class="page-header">
+                <h1><i class="fa fa-trophy"></i> Totals</h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-map-marker fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{home.lifetime.total.distance | number : 1}}</div>
+                                    <div>Distance (kilometers)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-road fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{home.lifetime.total.steps | number : 1}}</div>
+                                    <div>Steps</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-arrow-up fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{home.lifetime.total.floors | number : 0}}</div>
+                                    <div>Floors</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- /Personal Totals Panel -->
 
         </div>
         <!-- /.container-fluid -->
@@ -196,7 +250,8 @@
 
         $http.get("/lifetime").success(function(data) {
             console.log(data);
-            self.lifetime = data;
+            self.lifetime = data.lifetime;
+            self.personalBests = data.best;
         }).error(function() {
             console.log("Noo!!");
         });
