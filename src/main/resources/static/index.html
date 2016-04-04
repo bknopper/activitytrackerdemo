@@ -45,7 +45,7 @@
                     <span ng-bind="home.user.fullName"/> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        <a href="#" ng-click="home.logout()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                     </li>
                 </ul>
             </li>
@@ -120,6 +120,16 @@
             self.user = "N/A";
             self.authenticated = false;
         });
+
+        self.logout = function() {
+            $http.post('/logout', {}).success(function () {
+                self.authenticated = false;
+                $location.path("/");
+            }).error(function (data) {
+                console.log("Logout failed")
+                self.authenticated = false;
+            });
+        };
 
 //        $http.get("/chr").success(function(data) {
 //            console.log(data);
