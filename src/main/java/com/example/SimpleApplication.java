@@ -1,5 +1,7 @@
 package com.example;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,6 +32,8 @@ import java.security.Principal;
 @EnableOAuth2Sso
 @RestController
 public class SimpleApplication extends WebSecurityConfigurerAdapter {
+
+	final static Logger LOG = Logger.getLogger(SimpleApplication.class);
 
 	@Autowired
 	private OAuth2RestOperations oauth2RestTemplate;
@@ -80,23 +84,28 @@ public class SimpleApplication extends WebSecurityConfigurerAdapter {
 	}
 
 
-	@RequestMapping("/chr")
-	public String chr() {
-
-		ResponseEntity<String> response = oauth2RestTemplate.getForEntity(
-				"https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/00:00/23:59.json",
-				String.class);
-
-		return response.toString();
-	}
-
 	@RequestMapping("/lifetime")
 	public String lifetime() {
+		String resourceUrl = "https://api.fitbit.com/1/user/-/activities.json";
+		return getFitBitData(resourceUrl);
+	}
+
+	@RequestMapping("/summarytoday")
+	public String todaysSummary() {
+		final String resourceUrl = "https://api.fitbit.com/1/user/-/activities.json";
+		return getFitBitData(resourceUrl);
+	}
+
+	private String getFitBitData(String resourceUrl) {
 		ResponseEntity<String> response = oauth2RestTemplate.getForEntity(
-				"https://api.fitbit.com/1/user/-/activities.json",
+				resourceUrl,
 				String.class);
 
-		return response.getBody().toString();
+		LOG.info(String.format("Performing FitBit API REST call for resource %s", resourceUrl));
+		final String result = response.getBody().toString();
+		LOG.info(String.format("Result: %s", result));
+
+		return result;
 	}
 
 	public static void main(String[] args) {
