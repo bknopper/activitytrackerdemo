@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>nl.bknopper</groupId>
+	<artifactId>activitytrackerdemo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>simple</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Activity Tracker Demo</name>
+	<description>Demo showing how to get data from the FitBit API and present it in a semi-flashy UI</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
