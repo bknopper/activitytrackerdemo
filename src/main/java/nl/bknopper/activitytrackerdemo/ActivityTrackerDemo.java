@@ -33,9 +33,9 @@ import java.util.Date;
 @SpringBootApplication
 @EnableOAuth2Sso
 @RestController
-public class SimpleApplication extends WebSecurityConfigurerAdapter {
+public class ActivityTrackerDemo extends WebSecurityConfigurerAdapter {
 
-	final static Logger LOG = Logger.getLogger(SimpleApplication.class);
+	final static Logger LOG = Logger.getLogger(ActivityTrackerDemo.class);
 
 	@Autowired
 	private OAuth2RestOperations oauth2RestTemplate;
@@ -150,6 +150,6 @@ public class SimpleApplication extends WebSecurityConfigurerAdapter {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(SimpleApplication.class, args);
+		SpringApplication.run(ActivityTrackerDemo.class, args);
 	}
 }
