@@ -1,4 +1,4 @@
-package nl.bknopper.activitytrackerdemo;
+package nl.bknopper.activitytrackerdemo.backend;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
