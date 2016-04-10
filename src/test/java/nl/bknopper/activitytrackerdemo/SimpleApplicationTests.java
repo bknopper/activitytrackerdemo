@@ -1,4 +1,4 @@
-package com.example;
+package nl.bknopper.activitytrackerdemo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
