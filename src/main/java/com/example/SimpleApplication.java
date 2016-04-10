@@ -15,6 +15,7 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
@@ -95,10 +96,7 @@ public class SimpleApplication extends WebSecurityConfigurerAdapter {
 
 	@RequestMapping("/summarytoday")
 	public String todaysSummary() {
-
-		// Get today as String in the correct format
-		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		final String today = sdf.format(Date.from(Instant.now()));
+		final String today = getTodayAsString();
 
 		final String resourceUrl = String.format("https://api.fitbit.com/1/user/-/activities/date/%s.json", today);
 		return getFitBitData(resourceUrl);
@@ -106,21 +104,47 @@ public class SimpleApplication extends WebSecurityConfigurerAdapter {
 
 	@RequestMapping("/lastweek/steps")
 	public String lastweekSteps() {
-
-		// Get today as String in the correct format
-		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		final String today = sdf.format(Date.from(Instant.now()));
+		final String today = getTodayAsString();
 
 		final String resourceUrl = String.format("https://api.fitbit.com/1/user/-/activities/tracker/steps/date/%s/7d.json", today);
 		return getFitBitData(resourceUrl);
 	}
 
+	@RequestMapping("/lastweek/distance")
+	public String lastweekDistance() {
+		final String today = getTodayAsString();
+
+		final String resourceUrl = String.format("https://api.fitbit.com/1/user/-/activities/tracker/distance/date/%s/7d.json", today);
+		return getFitBitData(resourceUrl);
+	}
+
+	@RequestMapping("/lastweek/floors")
+	public String lastweekFloors() {
+		final String today = getTodayAsString();
+
+		final String resourceUrl = String.format("https://api.fitbit.com/1/user/-/activities/tracker/floors/date/%s/7d.json", today);
+		return getFitBitData(resourceUrl);
+	}
+
+	@RequestMapping("/today/heartrate")
+	public String heartRateToday() {
+		final String today = getTodayAsString();
+
+		final String resourceUrl = String.format("https://api.fitbit.com/1/user/-/activities/heart/date/%s/1d/1sec/time/00:00/23:59.json", today);
+		return getFitBitData(resourceUrl);
+	}
+
+	private String getTodayAsString() {
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(Date.from(Instant.now()));
+	}
+
 	private String getFitBitData(String resourceUrl) {
+		LOG.info(String.format("Performing FitBit API REST call for resource %s", resourceUrl));
 		ResponseEntity<String> response = oauth2RestTemplate.getForEntity(
 				resourceUrl,
 				String.class);
 
-		LOG.info(String.format("Performing FitBit API REST call for resource %s", resourceUrl));
 		final String result = response.getBody().toString();
 		LOG.info(String.format("Result: %s", result));
 
