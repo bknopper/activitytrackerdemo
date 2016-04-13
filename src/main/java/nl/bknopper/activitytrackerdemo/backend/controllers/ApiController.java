@@ -1,4 +1,4 @@
-package nl.bknopper.activitytrackerdemo.backend;
+package nl.bknopper.activitytrackerdemo.backend.controllers;
 
 
 import org.apache.log4j.Logger;
