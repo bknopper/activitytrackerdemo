@@ -68,9 +68,9 @@ angular.module("app", []).controller("home", function ($http) {
         var hr = data["activities-heart-intraday"];
         var plotData = [];
 
+        var today = getTodayAsString();
         for(var i = 0; i < hr.dataset.length; i++) {
-            // TODO fix hardcoded date
-            plotData.push([new Date("2016/04/06 " + hr.dataset[i].time).getTime(), hr.dataset[i].value]);
+            plotData.push([new Date(today + " " + hr.dataset[i].time).getTime(), hr.dataset[i].value]);
         }
 
         plotTime(plotData, 40, 180, "today-hr", "Todays Heart Rate");
@@ -134,7 +134,7 @@ angular.module("app", []).controller("home", function ($http) {
             },
             xaxis: {
                 mode: "time",
-                minTickSize: [1, "second"]
+                minTickSize: [5, "second"]
             },
             tooltip: false
         };
@@ -144,6 +144,22 @@ angular.module("app", []).controller("home", function ($http) {
                 label: label
             }],
             options);
+    }
+
+    function getTodayAsString() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+        var today = yyyy+'/'+mm+'/'+dd;
+        return today;
     }
 
 });
